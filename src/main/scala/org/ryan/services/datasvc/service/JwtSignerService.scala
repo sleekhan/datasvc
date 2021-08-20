@@ -25,16 +25,12 @@ class JwtSignerService {
     this.key = Keys.hmacShaKeyFor(secret.getBytes("utf-8"))
   }
 
-  def getAllClaimsFromToken(token: String): Claims = {
-    Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody()
-  }
-
   def getUsernameFromToken(token: String): String = {
     getAllClaimsFromToken(token).getSubject
   }
 
-  def getExpirationDateFromToken(token: String): Date = {
-    getAllClaimsFromToken(token).getExpiration
+  def validateToken(token: String) = {
+    !isTokenExpired(token)
   }
 
   private def isTokenExpired(token: String): Boolean = {
@@ -47,8 +43,12 @@ class JwtSignerService {
     }
   }
 
-  def validateToken(token: String) = {
-    !isTokenExpired(token)
+  def getExpirationDateFromToken(token: String): Date = {
+    getAllClaimsFromToken(token).getExpiration
+  }
+
+  def getAllClaimsFromToken(token: String): Claims = {
+    Jwts.parserBuilder().setSigningKey(this.key).build().parseClaimsJws(token).getBody()
   }
 
 }
