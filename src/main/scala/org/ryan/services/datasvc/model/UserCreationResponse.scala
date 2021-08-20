@@ -6,4 +6,4 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
 @JsonSerialize
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-case class UserCreationResponse(@JsonProperty("created") created: Int)
+case class UserCreationResponse(@JsonProperty created: Int)

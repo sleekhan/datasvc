@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@OpenAPIDefinition (info = new Info(title = "Data Service", version = "v1"))
+@OpenAPIDefinition(info = new Info(title = "Data Service", version = "v1"))
 @SecurityScheme(
   `type` = SecuritySchemeType.HTTP,
   name = "bearerAuth",
