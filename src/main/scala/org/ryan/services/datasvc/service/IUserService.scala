@@ -33,7 +33,7 @@ trait IUserController {
       responseCode = "200",
       content = Array(new Content(mediaType = "application/json", schema = new Schema(implementation = classOf[User])))),
     new ApiResponse(description = "No user to have the email",
-      responseCode = "404",
+      responseCode = "204",
       content = Array(new Content(mediaType = "application/json"))),
     new ApiResponse(description = "Unauthorized",
       responseCode = "401",
