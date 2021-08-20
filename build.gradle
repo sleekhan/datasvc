@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -32,6 +34,9 @@ dependencies {
     //	implementation 'org.typelevel:cats-core_3:2.6.1'
     implementation 'org.scala-lang:scala3-library_3:3.0.1'
 
+    if(OperatingSystem.current().isMacOsX()) {
+        implementation 'io.netty:netty-resolver-dns-native-macos:4.1.67.Final'
+    }
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 }

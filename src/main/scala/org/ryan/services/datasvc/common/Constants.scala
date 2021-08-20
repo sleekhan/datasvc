@@ -5,3 +5,7 @@ object JWT_TOKEN {
   final val ROLE_PREFIX = "ROLE_"
   final val ROLE_KEY_NAME = "role"
 }
+
+object EXCEPTION_MSG {
+  final val MESSAGE_KEY = "message"
+}

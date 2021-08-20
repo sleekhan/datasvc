@@ -1,5 +1,6 @@
 package org.ryan.services.datasvc.engine
 
+import org.ryan.services.datasvc.common.EXCEPTION_MSG
 import org.springframework.boot.autoconfigure.web.WebProperties.Resources
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -33,11 +34,17 @@ class DefaultApplicationErrorWebExceptionHandler(
     val errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.defaults)
 
     val validationError = getError(request)
-    if (validationError.isInstanceOf[WebExchangeBindException]) {
-      val errors = validationError.asInstanceOf[WebExchangeBindException]
-        .getAllErrors.stream().map(e => new DefaultMessageSourceResolvable(e).getDefaultMessage)
-        .collect(Collectors.toList[String])
-      errorPropertiesMap.put("message", errors)
+
+    validationError match {
+      case v: WebExchangeBindException =>
+        val errors = validationError.asInstanceOf[WebExchangeBindException]
+          .getAllErrors.stream().map(e => new DefaultMessageSourceResolvable(e).getDefaultMessage)
+          .collect(Collectors.toList[String])
+        errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, errors)
+      case _ =>
+        if (Option(errorPropertiesMap.get(EXCEPTION_MSG.MESSAGE_KEY)).isEmpty) {
+          errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, "")
+        }
     }
 
     val errorCode = errorPropertiesMap.get("status").asInstanceOf[Int]
