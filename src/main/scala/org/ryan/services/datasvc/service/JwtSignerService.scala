@@ -34,12 +34,12 @@ class JwtSignerService {
   }
 
   private def isTokenExpired(token: String): Boolean = {
-    val expiration = Option(getExpirationDateFromToken(token))
+    val expiration = getExpirationDateFromToken(token)
     expiration match {
-      case Some(x) =>
+      case x: Date =>
         log.debug("expiration " + expiration.toString)
         x.before(new Date)
-      case None => true
+      case _ => true
     }
   }
 
