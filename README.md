@@ -26,6 +26,14 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQ
 ### Swagger
 * [http://localhost:8080/api-docs/api.html](http://localhost:8080/api-docs/api.html)
 
+### HTTP/2
+Http2 can be enabled over SSL.
+
+Command to make a self-signed certificate
+```
+keytool -genkey -alias datasvc -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
+```
+
 ### Learned by this project
 #### Webflux
 1. Mono[ServerResonse] doesn't work in annotation basis (not router function) 
@@ -54,11 +62,3 @@ class SecurityConfiguration {
 2. Access control in level of method
     * Add @EnableReactiveMethodSecurity above the securityWebFilterChain class
     * You can specify @PreAutorize from the service layer
-
-### HTTP/22
-Http2 can be enabled over SSL.
-
-Command to make a self-signed certificate
-```
-keytool -genkey -alias datasvc -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
-```
