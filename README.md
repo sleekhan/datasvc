@@ -1,7 +1,7 @@
 # Data Service
 This project is intended to practice developing REST APIs with JWT token-based access.
 
-### Techniques used
+### Technology for this
 * Language: Scala
 * Web Framework: Spring Webflux, Spring Security
 * Api Document: OpenApi3
@@ -29,8 +29,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQ
 ### Learned by this project
 #### Webflux
 1. Mono[ServerResonse] doesn't work in annotation basis (not router function) 
-2. The name property should be specified like @JsonProperty("email"). If not, it'll make a Jackson error
-3. // There is no benefit to raise NoContext Exception because the response won't has any body content
+2. There is no benefit to raise NoContext Exception because the response won't has any body content
 
 #### Spring Security
 1. Access control in the Controller
@@ -55,3 +54,11 @@ class SecurityConfiguration {
 2. Access control in level of method
     * Add @EnableReactiveMethodSecurity above the securityWebFilterChain class
     * You can specify @PreAutorize from the service layer
+
+### HTTP/22
+Http2 can be enabled over SSL.
+
+Command to make a self-signed certificate
+```
+keytool -genkey -alias datasvc -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000
+```

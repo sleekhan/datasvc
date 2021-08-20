@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.{GetMapping, PathVariable, PostMapping, RequestBody}
 import reactor.core.publisher.Mono
 
+import javax.validation.Valid
+
 trait IUserController {
   // -----------------------------------------------------------------------------------------------
   @Operation(summary = "Save a user", responses = Array(
@@ -22,7 +24,8 @@ trait IUserController {
       content = Array(new Content(mediaType = "application/json")))
   ))
   @PostMapping(Array("/v1/user"))
-  def saveUser(@RequestBody user: User): Mono[ResponseEntity[UserCreationResponse]]
+  def saveUser(@Valid
+               @RequestBody user: User): Mono[ResponseEntity[UserCreationResponse]]
 
   // -----------------------------------------------------------------------------------------------
   @Operation(summary = "Retrieve a user information with the email", responses = Array(

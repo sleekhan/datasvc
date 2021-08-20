@@ -6,7 +6,7 @@ import org.ryan.services.datasvc.data.UserRepository
 import org.ryan.services.datasvc.exception.BadRequestException
 import org.ryan.services.datasvc.model.{User, UserCreationResponse}
 import org.slf4j.{Logger, LoggerFactory}
-import org.springframework.http.ResponseEntity
+import org.springframework.http.{HttpStatus, ResponseEntity}
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation._
 import reactor.core.publisher.Mono
@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono
 class UserController(userService: UserService) extends IUserController {
   val log: Logger = LoggerFactory.getLogger(classOf[UserController])
 
-  def saveUser(@RequestBody user: User): Mono[ResponseEntity[UserCreationResponse]] = {
+  def saveUser(user: User): Mono[ResponseEntity[UserCreationResponse]] = {
     log.debug("user: " + user.toString)
     val userOp = Option(user)
 
@@ -27,7 +27,7 @@ class UserController(userService: UserService) extends IUserController {
         userService.createUser(u)
           .map(created => {
             val response = UserCreationResponse(created.toInt)
-            ResponseEntity.ok().body(response)
+            ResponseEntity.status(HttpStatus.CREATED).body(response)
           })
 
       case None =>
@@ -35,7 +35,7 @@ class UserController(userService: UserService) extends IUserController {
     }
   }
 
-  def retrieveUser(@PathVariable email: String): Mono[ResponseEntity[User]] = {
+  def retrieveUser(email: String): Mono[ResponseEntity[User]] = {
     log.debug(email)
     val emailOp = Option(email)
 
