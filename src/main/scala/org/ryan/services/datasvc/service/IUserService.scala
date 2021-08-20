@@ -14,7 +14,7 @@ trait IUserController {
   // -----------------------------------------------------------------------------------------------
   @Operation(summary = "Save a user", responses = Array(
     new ApiResponse(description = "Successful Operation",
-      responseCode = "200",
+      responseCode = "201",
       content = Array(new Content(mediaType = "application/json", schema = new Schema(implementation = classOf[UserCreationResponse])))),
     new ApiResponse(description = "Unauthorized",
       responseCode = "401",
