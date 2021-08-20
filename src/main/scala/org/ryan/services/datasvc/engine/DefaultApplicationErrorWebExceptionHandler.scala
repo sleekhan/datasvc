@@ -36,8 +36,8 @@ class DefaultApplicationErrorWebExceptionHandler(
     val validationError = getError(request)
 
     validationError match {
-      case v: WebExchangeBindException =>
-        val errors = validationError.asInstanceOf[WebExchangeBindException]
+      case ve: WebExchangeBindException =>
+        val errors = ve
           .getAllErrors.stream().map(e => new DefaultMessageSourceResolvable(e).getDefaultMessage)
           .collect(Collectors.toList[String])
         errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, errors)
