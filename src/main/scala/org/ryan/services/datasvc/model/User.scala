@@ -11,7 +11,7 @@ import javax.validation.constraints.{Email, NotBlank}
 @JsonSerialize
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 case class User() {
-  @Email
+  @Email(message = "Invalid email format")
   @NotBlank
   @JsonProperty
   val email: String = ""
