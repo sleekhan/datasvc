@@ -33,6 +33,7 @@ class SecurityConfiguration {
       .pathMatchers("/testsvc/**").permitAll()
       .pathMatchers("/api-docs/**").permitAll()
       .pathMatchers("/v3/**").permitAll()
+      .pathMatchers("/actuator/**").permitAll()
       .pathMatchers(HttpMethod.GET, "/usersvc/v1/user/**").hasAnyRole("user", "admin")
       .pathMatchers(HttpMethod.POST, "/usersvc/v1/user/**").hasRole("admin")
       .anyExchange().authenticated()

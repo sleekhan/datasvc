@@ -37,7 +37,7 @@ keytool -genkey -alias datasvc -storetype PKCS12 -keyalg RSA -keysize 2048 -keys
 ### Learned by this project
 #### Webflux
 1. Mono[ServerResonse] doesn't work in annotation basis (not router function) 
-2. There is no benefit to raise NoContext Exception because the response won't has any body content
+2. There is no benefit to raise NoContent Exception because the response won't have a body
 
 #### Spring Security
 1. Access control in the Controller

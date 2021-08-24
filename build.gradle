@@ -9,6 +9,9 @@ plugins {
 group = 'org.ryan.services'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+ext {
+    springbootVersion = '2.5.3'
+}
 
 repositories {
     mavenCentral()
@@ -18,11 +21,16 @@ tasks.withType(ScalaCompile) {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:2.0.2'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.3'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-webflux:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-aop:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-security:$springbootVersion"
+
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.7.1"
+    implementation "io.github.resilience4j:resilience4j-reactor:1.7.1"
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.7.3'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
@@ -38,8 +46,8 @@ dependencies {
     if(OperatingSystem.current().isMacOsX()) {
         implementation 'io.netty:netty-resolver-dns-native-macos:4.1.67.Final'
     }
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springbootVersion"
+    testImplementation 'io.projectreactor:reactor-test:3.4.9'
 }
 
 test {
