@@ -8,14 +8,15 @@ import org.springframework.boot.web.reactive.error.ErrorAttributes
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.DefaultMessageSourceResolvable
 import org.springframework.core.annotation.Order
-import org.springframework.http.MediaType
 import org.springframework.http.codec.ServerCodecConfigurer
+import org.springframework.http.{HttpStatus, MediaType}
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebExchangeBindException
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.server._
 
 import java.util.stream.Collectors
+import javax.validation.ConstraintViolationException
 
 @Component
 @Order(-2)
@@ -41,10 +42,14 @@ class DefaultApplicationErrorWebExceptionHandler(
           .getAllErrors.stream().map(e => new DefaultMessageSourceResolvable(e).getDefaultMessage)
           .collect(Collectors.toList[String])
         errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, errors)
+      case cve: ConstraintViolationException =>
+        val rawMessage = validationError.getMessage.split(":")
+        val message = if (rawMessage.length >= 2) Array(rawMessage(1).trim) else rawMessage
+        errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, message)
+        errorPropertiesMap.put("status", HttpStatus.BAD_REQUEST.value())
+        errorPropertiesMap.put("error", "Bad Request")
       case _ =>
-        if (Option(errorPropertiesMap.get(EXCEPTION_MSG.MESSAGE_KEY)).isEmpty) {
-          errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, "")
-        }
+        errorPropertiesMap.put(EXCEPTION_MSG.MESSAGE_KEY, null)
     }
 
     val errorCode = errorPropertiesMap.get("status").asInstanceOf[Int]

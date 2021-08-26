@@ -8,11 +8,13 @@ import org.ryan.services.datasvc.model.{User, UserCreationResponse}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.http.{HttpStatus, ResponseEntity}
 import org.springframework.stereotype.Service
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation._
 import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping(Array("/usersvc"))
+@Validated
 @Tag(name = "User Service")
 @SecurityRequirement(name = "bearerAuth")
 class UserController(userService: UserService) extends IUserController {

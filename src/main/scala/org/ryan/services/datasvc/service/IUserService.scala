@@ -5,10 +5,11 @@ import io.swagger.v3.oas.annotations.media.{Content, Schema}
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.ryan.services.datasvc.model.{User, UserCreationResponse}
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.{GetMapping, PathVariable, PostMapping, RequestBody}
+import org.springframework.web.bind.annotation._
 import reactor.core.publisher.Mono
 
 import javax.validation.Valid
+import javax.validation.constraints.Email
 
 trait IUserController {
   // -----------------------------------------------------------------------------------------------
@@ -43,5 +44,7 @@ trait IUserController {
       content = Array(new Content(mediaType = "application/json")))
   ))
   @GetMapping(Array("/v1/user/{email}"))
-  def retrieveUser(@PathVariable email: String): Mono[ResponseEntity[User]]
+  def retrieveUser(@PathVariable
+                   @Email(message = "Invalid email format")
+                   email: String): Mono[ResponseEntity[User]]
 }
